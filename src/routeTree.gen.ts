@@ -9,38 +9,180 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardOutreachRouteImport } from './routes/dashboard.outreach'
+import { Route as DashboardMapsRouteImport } from './routes/dashboard.maps'
+import { Route as DashboardLeadsRouteImport } from './routes/dashboard.leads'
+import { Route as DashboardGithubRouteImport } from './routes/dashboard.github'
 
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardOutreachRoute = DashboardOutreachRouteImport.update({
+  id: '/outreach',
+  path: '/outreach',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMapsRoute = DashboardMapsRouteImport.update({
+  id: '/maps',
+  path: '/maps',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLeadsRoute = DashboardLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardGithubRoute = DashboardGithubRouteImport.update({
+  id: '/github',
+  path: '/github',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/projects': typeof ProjectsRoute
+  '/services': typeof ServicesRoute
+  '/dashboard/github': typeof DashboardGithubRoute
+  '/dashboard/leads': typeof DashboardLeadsRoute
+  '/dashboard/maps': typeof DashboardMapsRoute
+  '/dashboard/outreach': typeof DashboardOutreachRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/projects': typeof ProjectsRoute
+  '/services': typeof ServicesRoute
+  '/dashboard/github': typeof DashboardGithubRoute
+  '/dashboard/leads': typeof DashboardLeadsRoute
+  '/dashboard/maps': typeof DashboardMapsRoute
+  '/dashboard/outreach': typeof DashboardOutreachRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/projects': typeof ProjectsRoute
+  '/services': typeof ServicesRoute
+  '/dashboard/github': typeof DashboardGithubRoute
+  '/dashboard/leads': typeof DashboardLeadsRoute
+  '/dashboard/maps': typeof DashboardMapsRoute
+  '/dashboard/outreach': typeof DashboardOutreachRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/projects'
+    | '/services'
+    | '/dashboard/github'
+    | '/dashboard/leads'
+    | '/dashboard/maps'
+    | '/dashboard/outreach'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/projects'
+    | '/services'
+    | '/dashboard/github'
+    | '/dashboard/leads'
+    | '/dashboard/maps'
+    | '/dashboard/outreach'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/projects'
+    | '/services'
+    | '/dashboard/github'
+    | '/dashboard/leads'
+    | '/dashboard/maps'
+    | '/dashboard/outreach'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  ProjectsRoute: typeof ProjectsRoute
+  ServicesRoute: typeof ServicesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +190,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/outreach': {
+      id: '/dashboard/outreach'
+      path: '/outreach'
+      fullPath: '/dashboard/outreach'
+      preLoaderRoute: typeof DashboardOutreachRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/maps': {
+      id: '/dashboard/maps'
+      path: '/maps'
+      fullPath: '/dashboard/maps'
+      preLoaderRoute: typeof DashboardMapsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/leads': {
+      id: '/dashboard/leads'
+      path: '/leads'
+      fullPath: '/dashboard/leads'
+      preLoaderRoute: typeof DashboardLeadsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/github': {
+      id: '/dashboard/github'
+      path: '/github'
+      fullPath: '/dashboard/github'
+      preLoaderRoute: typeof DashboardGithubRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardGithubRoute: typeof DashboardGithubRoute
+  DashboardLeadsRoute: typeof DashboardLeadsRoute
+  DashboardMapsRoute: typeof DashboardMapsRoute
+  DashboardOutreachRoute: typeof DashboardOutreachRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardGithubRoute: DashboardGithubRoute,
+  DashboardLeadsRoute: DashboardLeadsRoute,
+  DashboardMapsRoute: DashboardMapsRoute,
+  DashboardOutreachRoute: DashboardOutreachRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  ProjectsRoute: ProjectsRoute,
+  ServicesRoute: ServicesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
